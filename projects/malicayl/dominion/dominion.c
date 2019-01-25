@@ -1088,13 +1088,7 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
       return 0;
 
     case sea_hag:
-      for (i = 0; i < state->numPlayers; i++){
-	if (i != currentPlayer){
-	  state->discard[i][state->discardCount[i]] = state->deck[i][state->deckCount[i]--];			    state->deckCount[i]--;
-	  state->discardCount[i]++;
-	  state->deck[i][state->deckCount[i]--] = curse;//Top card now a curse
-	}
-      }
+      sea_hagCard(i, state, currentPlayer);
       return 0;
 
     case treasure_map:
@@ -1364,6 +1358,20 @@ void stewardCard(int choice1, int choice2, int choice3, int currentPlayer, struc
 
     //discard card from hand
     discardCard(handPos, currentPlayer, state, 0);
+}
+
+void sea_hagCard(int i, struct gameState *state, int currentPlayer)
+{
+    for (i = 0; i < state->numPlayers; i++)
+    {
+	    if (i != currentPlayer)
+        {
+	        state->discard[i][state->discardCount[i]] = state->deck[i][state->deckCount[i]--];
+            state->deckCount[i]--;
+	        state->discardCount[i]++;
+	        state->deck[i][state->deckCount[i]--] = curse;//Top card now a curse
+	    }
+    }
 }
 
 //end of dominion.c

@@ -135,6 +135,6 @@ void adventurerCard(int drawntreasure, struct gameState *state, int currentPlaye
 void smithyCard(int i, int currentPlayer, struct gameState *state, int handPos);
 void feastCard(int i, struct gameState *state, int currentPlayer, int temphand[], int x, int choice1);
 void stewardCard(int choice1, int choice2, int choice3, int currentPlayer, struct gameState *state, int handPos);
-//sea_hagCard();
+void sea_hagCard(int i, struct gameState *state, int currentPlayer);
 
 #endif
