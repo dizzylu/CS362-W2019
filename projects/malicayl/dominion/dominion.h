@@ -133,7 +133,7 @@ int getWinners(int players[MAX_PLAYERS], struct gameState *state);
  ***************************************/
 void adventurerCard(int drawntreasure, struct gameState *state, int currentPlayer, int cardDrawn, int temphand[], int z);
 void smithyCard(int i, int currentPlayer, struct gameState *state, int handPos);
-//feastCard();
+void feastCard(int i, struct gameState *state, int currentPlayer, int temphand[], int x, int choice1);
 //stewardCard();
 //sea_hagCard();
 
