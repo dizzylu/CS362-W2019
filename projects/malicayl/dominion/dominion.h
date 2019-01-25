@@ -132,7 +132,7 @@ int getWinners(int players[MAX_PLAYERS], struct gameState *state);
  * Assignment 2 - Function Prototype
  ***************************************/
 void adventurerCard(int drawntreasure, struct gameState *state, int currentPlayer, int cardDrawn, int temphand[], int z);
-//smithyCard();
+void smithyCard(int i, int currentPlayer, struct gameState *state, int handPos);
 //feastCard();
 //stewardCard();
 //sea_hagCard();
