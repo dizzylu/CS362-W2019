@@ -1338,7 +1338,7 @@ void feastCard(int i, struct gameState *state, int currentPlayer, int temphand[]
 
 void stewardCard(int choice1, int choice2, int choice3, int currentPlayer, struct gameState *state, int handPos)
 {
-    if (choice1 == 1)
+    if (choice1 = 1)
 	{
         //+2 cards
 	    drawCard(currentPlayer, state);
