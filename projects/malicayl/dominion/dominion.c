@@ -1265,7 +1265,7 @@ void adventurerCard(int drawntreasure, struct gameState *state, int currentPlaye
 void smithyCard(int i, int currentPlayer, struct gameState *state, int handPos)
 {
     //+3 Cards
-    for (i = 0; i < 3; i++)
+    for (i = 0; i <= 3; i++)
 	{
 	    drawCard(currentPlayer, state);
 	}
