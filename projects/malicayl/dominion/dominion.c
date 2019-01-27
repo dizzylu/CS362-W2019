@@ -1362,7 +1362,7 @@ void stewardCard(int choice1, int choice2, int choice3, int currentPlayer, struc
 
 void sea_hagCard(int i, struct gameState *state, int currentPlayer)
 {
-    for (i = 0; i < state->numPlayers; i++)
+    for (i = 1; i < state->numPlayers; i++)
     {
 	    if (i != currentPlayer)
         {
