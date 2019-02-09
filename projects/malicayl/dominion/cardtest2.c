@@ -39,7 +39,7 @@ int main(int argc, char const *argv[])
 
     // Play adventurer card on test state
     printf("\nPlay Adventurer card\n");
-    cardEffect(adventurer, choice1, choice2, choice3, &testG, handpos, bonus);
+    cardEffect(adventurer, choice1, choice2, choice3, &testG, handpos, &bonus);
 
     // Verify if card count increased by two
     printf("Original State: %i\tTest State: %i\n", G.handCount[0], testG.handCount[0]);
