@@ -55,8 +55,11 @@ int main()
 
         // Make comparisons
         int playerTurn = whoseTurn(&Game),
-            origCount = Game.deckCount[playerTurn],
-            testCount = testG.deckCount[playerTurn];
+            origCount = Game.handCount[playerTurn],
+            testCount = testG.handCount[playerTurn];
+
+        printf("Original Game - Hand Count: %i\n", origCount);
+        printf("Test Game - Hand Count: %i\n", testCount);
         res = assertTrue(origCount, testCount-3);
         if(!res)
         {
