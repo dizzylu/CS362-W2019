@@ -11,9 +11,8 @@
 #include <string.h>
 #include <time.h>
 
-const int numTests = 100;
+#define TESTCARD village
 
-// Tester defined assert
 int assertTrue(int a, int b)
 {
     if(a != b)
@@ -24,45 +23,48 @@ int assertTrue(int a, int b)
 
 int main()
 {
-    srand(time(NULL));
-    printf("\n\nRandom Testing: Village Card\n------------------------------\n\n");
-
     // Set game parameters
-    // Source: CS362 Card Test sample
+    // Source: CS362 card test sample
+    srand(time(NULL));
+    const int numTests = 100;
     struct gameState Game, testG;
     int k[10] = {adventurer, embargo, village, minion, mine,
                  cutpurse, sea_hag, tribute, smithy, council_room};
-    int seed = 1000;
+    int seed = 1000, passed = 0, failed = 0, failedInit = 0, res = 0,
+        maxPlay = 4, minPlay = 2;
 
     // Run tests
-    int passed = 0, failed = 0, failedInit = 0, res;
     for(int i = 0; i < numTests; ++i)
     {
-        // Set up a game and copy state to make comparisons
         printf("Test #%i\n", i+1);
-        int numPlayers = rand() % MAX_PLAYERS + 2;
+
+        // Randomize number of players and player turn
+        int numPlayers = rand() % (maxPlay - minPlay + 1) + minPlay,
+            randTurn = rand() % numPlayers;
+
+        // Setup a game and copy state to make comparisons
         int setup = initializeGame(numPlayers, k, seed, &Game);
         if(setup == -1)
         {
             printf("*Game Initialization Failed*\n");
             failedInit++;
         }
+        Game.whoseTurn = randTurn;
         memcpy(&testG, &Game, sizeof(struct gameState));
 
         // Randomize choices and play card
-        int choice1 = rand() % 3 + 1, choice2 = rand() % 3 + 1, choice3 = rand() % 3 + 1, bonus = 0;
-        cardEffect(village, choice1, choice2, choice3, &testG, 0, &bonus);
+        int choice1 = rand(), choice2 = rand(), choice3 = rand(), bonus = rand();
+        cardEffect(TESTCARD, choice1, choice2, choice3, &testG, 0, &bonus);
 
         // Compare with original state
         int playerTurn = whoseTurn(&Game),
-            origCount = Game.deckCount[playerTurn],
-            testCount = testG.deckCount[playerTurn],
-            origAct = Game.numActions,
-            testAct = testG.numActions;
+            origHand = Game.handCount[playerTurn], testHand = testG.handCount[playerTurn],
+            origAct = Game.numActions, testAct = testG.numActions;
 
-        printf("Original Game - Deck Count: %i\n", origCount);
-        printf("Test Game - Deck Count: %i\n", testCount);
-        res = assertTrue(origCount-1, testCount);
+        // Card added to hand
+        printf("Original Game - Hand Count: %i\n", origHand);
+        printf("Test Game - Hand Count: %i\n", testHand);
+        res = assertTrue(origHand + 1, testHand);
         if(!res)
         {
             printf("Test Failed: +1 card not added\n\n");
@@ -74,7 +76,7 @@ int main()
             passed++;
         }
 
-        // Check number of actions
+        // 2 actions added
         printf("Original Game - Action Count: %i\n", origAct);
         printf("Test Game - Action Count: %i\n", testAct);
         res = assertTrue(origAct+2, testAct);
@@ -89,11 +91,11 @@ int main()
             passed++;
         }
 
-        // Clear game states
         memset(&Game, 0, sizeof(Game));
         memset(&testG, 0, sizeof(testG));
     }
 
+    // Display results
     printf("\n------------------------------\n");
     printf("Passing Tests: %i\nFailing Tests: %i\nGame Setup Failures: %i\n\n", passed, failed, failedInit);
 
