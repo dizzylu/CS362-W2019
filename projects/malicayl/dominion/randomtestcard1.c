@@ -32,6 +32,7 @@ int main()
     struct gameState Game, testG;
     int k[10] = {adventurer, embargo, village, minion, mine,
                  cutpurse, sea_hag, tribute, smithy, council_room};
+    int seed = 1000;
 
     // Run tests
     int passed = 0, failed = 0, failedInit = 0, res;
@@ -39,8 +40,7 @@ int main()
     {
         // Set up a game and copy state to make comparisons
         printf("Test #%i\n", i+1);
-        int numPlayers = rand() % MAX_PLAYERS + 1;
-        int seed = rand() % 1000;
+        int numPlayers = rand() % MAX_PLAYERS + 2;
         int setup = initializeGame(numPlayers, k, seed, &Game);
         if(setup == -1)
         {
