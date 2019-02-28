@@ -23,6 +23,8 @@ int assertTrue(int a, int b)
 
 int main()
 {
+    printf("\n\nRandom Testing: Village Card\n------------------------------\n\n");
+
     // Set game parameters
     // Source: CS362 card test sample
     srand(time(NULL));
