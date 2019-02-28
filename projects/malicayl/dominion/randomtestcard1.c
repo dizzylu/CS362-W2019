@@ -56,15 +56,19 @@ int main()
         int choice1 = rand(), choice2 = rand(), choice3 = rand(), bonus = rand();
         cardEffect(TESTCARD, choice1, choice2, choice3, &testG, 0, &bonus);
 
+        // Mimic card effect on original state
+        drawCard(randTurn, &Game);
+        Game.numActions += 2;
+        discardCard(0, randTurn, &Game, 0);
+
         // Compare with original state
-        int playerTurn = whoseTurn(&Game),
-            origHand = Game.handCount[playerTurn], testHand = testG.handCount[playerTurn],
+        int origHand = Game.handCount[randTurn], testHand = testG.handCount[randTurn],
             origAct = Game.numActions, testAct = testG.numActions;
 
         // Card added to hand
         printf("Original Game - Hand Count: %i\n", origHand);
         printf("Test Game - Hand Count: %i\n", testHand);
-        res = assertTrue(origHand + 1, testHand);
+        res = assertTrue(origHand, testHand);
         if(!res)
         {
             printf("Test Failed: +1 card not added\n\n");
@@ -79,7 +83,7 @@ int main()
         // 2 actions added
         printf("Original Game - Action Count: %i\n", origAct);
         printf("Test Game - Action Count: %i\n", testAct);
-        res = assertTrue(origAct+2, testAct);
+        res = assertTrue(origAct, testAct);
         if(!res)
         {
             printf("Test Failed: +2 actions not added\n\n");
