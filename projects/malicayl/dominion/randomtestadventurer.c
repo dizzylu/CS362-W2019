@@ -72,7 +72,7 @@ int main()
             printf("*Game Initialization Failed*\n");
             failedInit++;
         }
-        Game.deckCount[randTurn] = rand() % MAX_DECK + 5;
+        Game.deckCount[randTurn] = rand() % (MAX_DECK - 10 + 1) + 10;
         Game.handCount[randTurn] = rand() % MAX_HAND;
         Game.whoseTurn = randTurn;
         randDeck(Game.deckCount[randTurn], &Game, randTurn);
