@@ -21,9 +21,32 @@ int assertTrue(int a, int b)
         return 1;
 }
 
+// Randomize deck with cards
+void randDeck(int size, struct gameState* state, int player)
+{
+    for(int i = 0; i < size; ++i)
+    {
+        state->deck[player][i] = rand() % 7;
+    }
+}
+
+// Count treasure cards
+int countTreasure(struct gameState* state, int player)
+{
+    int count = 0;
+    for(int i = 0; i < state->handCount[player]; ++i)
+    {
+        if(state->hand[player][i] == copper || state->hand[player][i] == silver ||
+            state->hand[player][i] == gold)
+            count++;
+    }
+    return count;
+}
+
+
 int main()
 {
-    printf("\n\nRandom Testing: Adventurer Card\n------------------------------\n\n");
+    printf("\nRandom Testing: Adventurer Card\n------------------------------\n\n");
 
     // Set game parameters
     // Source: CS362 card test sample
@@ -35,12 +58,10 @@ int main()
     int seed = 1000, passed = 0, failed = 0, failedInit = 0, res = 0,
         maxPlay = 4, minPlay = 2;
 
-    // Run tests
     for(int i = 0; i < numTests; ++i)
     {
-        printf("Test #%i\n", i+1);
-
         // Randomize number of players and player turn
+        printf("***Test #%i***\n", i+1);
         int numPlayers = rand() % (maxPlay - minPlay + 1) + minPlay,
             randTurn = rand() % numPlayers;
 
@@ -51,8 +72,13 @@ int main()
             printf("*Game Initialization Failed*\n");
             failedInit++;
         }
+        Game.deckCount[randTurn] = rand() % MAX_DECK + 5;
+        Game.handCount[randTurn] = rand() % MAX_HAND;
         Game.whoseTurn = randTurn;
+        randDeck(Game.deckCount[randTurn], &Game, randTurn);
         memcpy(&testG, &Game, sizeof(struct gameState));
+        printf("Initial Values\n");
+        printf("Treasure Count - Original: %i\tTest: %i\n\n", countTreasure(&Game, randTurn), countTreasure(&testG, randTurn));
 
         // Randomize choices and play card
         int choice1 = rand(), choice2 = rand(), choice3 = rand(), bonus = rand();
@@ -78,34 +104,16 @@ int main()
                 count++;
             }
         }
-
-        while(count -1 >= 0)
+        while(count-1 >= 0)
         {
             Game.discard[randTurn][Game.discardCount[randTurn]++] = temp[count-1];
             count-=1;
         }
 
         // Compare with original state
-        int origTreasure = 0, testTreasure = 0;
-        for(int j = 0; j < Game.handCount[randTurn]; ++j)
-        {
-            if(Game.hand[randTurn][j] == copper || Game.hand[randTurn][j] == silver ||
-               Game.hand[randTurn][j] == gold)
-            {
-                origTreasure++;
-            }
-        }
+        int origTreasure = countTreasure(&Game, randTurn), testTreasure = countTreasure(&testG, randTurn);
 
-        for(int k = 0; k < testG.handCount[randTurn]; ++k)
-        {
-            if(testG.hand[randTurn][k] == copper || testG.hand[randTurn][k] == silver ||
-               testG.hand[randTurn][k] == gold)
-            {
-                testTreasure++;
-            }
-        }
-
-        // 2 treasure cards added
+        printf("Result: +2 Treasure cards and discard\n");
         printf("Original Game - Treasure Count: %i\n", origTreasure);
         printf("Test Game - Treasure Count: %i\n", testTreasure);
         res = assertTrue(origTreasure, testTreasure);
