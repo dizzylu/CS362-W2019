@@ -37,16 +37,16 @@ int main(int argc, char const *argv[])
     // Display current count of both states
     printf("Player 1 Hand Count\nOriginal State: %i\tTest State: %i\n", G.handCount[0], testG.handCount[0]);
 
-    // Test that current player drew 3 cards
+    // Test that current player drew 3 cards and discarded current card
     printf("\nPlay Smithy card\n");
     cardEffect(smithy, choice1, choice2, choice3, &testG, handpos, &bonus);
     int oldCount = G.handCount[0];
     int newCount = testG.handCount[0];
     printf("Original State: %i\tTest State: %i\n", oldCount, newCount);
 
-    int result = assertTrue(newCount, oldCount+3);
+    int result = assertTrue(newCount, oldCount+2);
     if(result)
-        printf("\nTest Passed: 3 cards added to deck\n\n\n");
+        printf("\nTest Passed: 3 cards added and 1 card discarded\n\n\n");
     else if(!result)
         printf("\nTest Failed: Incorrect amount of cards added to deck\n\n\n");
 
