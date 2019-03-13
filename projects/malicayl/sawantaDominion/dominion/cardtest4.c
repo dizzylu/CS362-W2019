@@ -37,7 +37,7 @@ int main(int argc, char const *argv[])
     // Display current card count and action count
     printf("Player 1 Hand Count\nOriginal State: %i\tTest State: %i\n", G.handCount[0], testG.handCount[0]);
     printf("\nPlayer 1 Buy Count\nOriginal State: %i\tTest State: %i\n", G.numBuys, testG.numBuys);
-    printf("\nPlayer 2 Card Count\nOriginal State: %i\tTest State: %i\n", G.handCount[1], testG.handCount[1]);
+    printf("\nPlayer 2 Hand Count\nOriginal State: %i\tTest State: %i\n", G.handCount[1], testG.handCount[1]);
 
     // Play card
     printf("\nPlay Council Room Card\n");
@@ -47,9 +47,9 @@ int main(int argc, char const *argv[])
     int oldCount = G.handCount[0];
     int newCount = testG.handCount[0];
     printf("Card Count\nOriginal State: %i\tTest State: %i\n", oldCount, newCount);
-    int result = assertTrue(newCount, oldCount+4);
+    int result = assertTrue(newCount, oldCount+3);
     if(result)
-        printf("Test Passed: Four cards added to hand\n");
+        printf("Test Passed: Four cards added to hand and one card discarded\n");
     else if(!result)
         printf("Test Failed: Incorrect number of cards added\n");
 
@@ -59,9 +59,9 @@ int main(int argc, char const *argv[])
     printf("\nBuy Count\nOriginal State: %i\tTest State: %i\n", oldAct, newAct);
     int res = assertTrue(newAct, oldAct+1);
     if(res)
-        printf("Test Passed: One action added\n");
+        printf("Test Passed: One buy added\n");
     else if(!res)
-        printf("Test Failed: Incorrect number of actions added\n");
+        printf("Test Failed: Incorrect number of buys added\n");
 
     // Verify second player drew a card
     int oldDraw = G.handCount[1];
@@ -69,7 +69,7 @@ int main(int argc, char const *argv[])
     printf("\nSecond player card count\nOriginal: %i\tTest: %i\n", oldDraw, newDraw);
     res = assertTrue(newDraw, oldDraw+1);
     if(res)
-        printf("Test Passed: One card added\n\n\n");
+        printf("Test Passed: Player 2 added one card\n\n\n");
     else if(!res)
         printf("Test Failed: Incorrect number of cards added\n\n\n");
 
