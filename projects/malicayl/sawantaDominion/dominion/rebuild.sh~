@@ -1,0 +1,8 @@
+echo "Rebuilding..."
+make clean
+make all
+if [[ $? != 0 ]]; then exit $?; fi
+echo "Running testdom.sh"
+./testdom.sh > test
+echo "Running diff"
+diff reference test
