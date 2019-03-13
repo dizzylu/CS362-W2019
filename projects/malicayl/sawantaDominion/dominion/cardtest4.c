@@ -49,7 +49,7 @@ int main(int argc, char const *argv[])
     printf("Card Count\nOriginal State: %i\tTest State: %i\n", oldCount, newCount);
     int result = assertTrue(newCount, oldCount+4);
     if(result)
-        printf("Test Passed: One card added to hand\n");
+        printf("Test Passed: Four cards added to hand\n");
     else if(!result)
         printf("Test Failed: Incorrect number of cards added\n");
 
