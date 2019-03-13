@@ -46,9 +46,9 @@ int main(int argc, char const *argv[])
     int oldCount = G.handCount[0];
     int newCount = testG.handCount[0];
     printf("Card Count\nOriginal State: %i\tTest State: %i\n", oldCount, newCount);
-    int result = assertTrue(newCount, oldCount+1);
+    int result = assertTrue(newCount, oldCount);
     if(result)
-        printf("Test Passed: One card added to hand\n");
+        printf("Test Passed: One card added to hand and one card discarded\n");
     else if(!result)
         printf("Test Failed: Incorrect number of cards added\n");
 
